@@ -1,0 +1,876 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Wink API",
+        "version": "",
+        "description": "The Wink API connects Wink devices to users, apps, each other, and the wider web.\n\nNOTE: This is the documentation for the v1 version of the Wink API, originally published in 2013. The [v2 version of the API](http://docs.winkapiv2.apiary.io/) is much more powerful and extensible, but has breaking changes on this documentation. If you are a user of the original API but would like access to this version, please contact Wink Support to ask for a new set of credentials.\n\n"
+    },
+    "host": "api.wink.com",
+    "basePath": "/",
+    "schemes": [
+        "https"
+    ],
+    "paths": {
+        "/oauth2/token": {
+            "post": {
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "headers": {},
+                        "examples": {
+                            "application/json": {
+                                "data": {
+                                    "access_token": "example_access_token_like_135fhn80w35hynainrsg0q824hyn",
+                                    "refresh_token": "crazy_token_like_240qhn16hwrnga05euynaoeiyhw52_goes_here",
+                                    "token_type": "bearer"
+                                }
+                            }
+                        }
+                    }
+                },
+                "summary": "Sign in as user, or refresh user's expired access token",
+                "description": "Note that unlike most other calls, this call does not require (and in fact should not use) an OAuth 2.0 bearer token.\n\n",
+                "tags": [
+                    "OAuth"
+                ],
+                "parameters": []
+            }
+        },
+        "/{device_type}/{device_id}/desired_state": {
+            "put": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Update desired state",
+                "description": "While you can update a device's desired state with a PUT to the whole device, you can also do a put of just the desired state to this endpoint\n\n",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            }
+        },
+        "/users/me/wink_devices": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Retrieve All Devices of User",
+                "description": "",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            }
+        },
+        "/{device_type}/{device_id}/users": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "List shared device users",
+                "description": "",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            },
+            "post": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Share a device",
+                "description": "",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            }
+        },
+        "/{device_type}/{device_id}/users/{email}": {
+            "delete": {
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Unshare a device",
+                "description": "",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            }
+        },
+        "/air_conditioners/{device_id}": {
+            "get": {
+                "responses": {},
+                "summary": "Get Air Conditioner",
+                "description": "#### Air Conditioner Model Fields\n\n|API field|Attributes|Description|\n|----|----|----|\n|air_conditioner_id|string, assigned|API identifier|\n\n#### Desired State Attributes\n\n|API field|Attributes|Description|\n|----|----|----|\n|fan_speed|float|0 - 1|\n|mode|string|\"cool_only\", \"fan_only\", \"auto_eco\"|\n|powered|boolean|whether or not the unit is powered on\n|max_set_point|float|temperature above which the unit should be cooling|\n\n#### Last Reading Attributes\n\n|API field|Attributes|Description|\n|----|----|----|\n|connection|Boolean|whether or not the device is reachable remotely|\n|temperature|float|maps to ambient temperature last read from device itself|\n|consumption|float|total consumption in watts|\n\n",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            }
+        },
+        "/binary_switches/{device_id}": {
+            "get": {
+                "responses": {},
+                "summary": "Get Binary Switch",
+                "description": "#### Binary Switch Model Fields\n\n|API field|Attributes|Description|\n|----|----|----|\n|binary_switch_id|string, assigned|API identifier|\n\n#### Desired State Attributes\n\n|API field|Attributes|Description|\n|----|----|----|\n|powered|boolean|whether device is powered on|\n\n#### Last Reading Attributes\n\n|API field|Attributes|Description|\n|----|----|----|\n|connection|Boolean|whether or not the device is reachable remotely|\n\n",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            }
+        },
+        "/shades/{device_id}": {
+            "get": {
+                "responses": {},
+                "summary": "Get Blind",
+                "description": "#### Blind Model Fields\n\n|API field|Attributes|Description|\n|----|----|----|\n|shade_id|string, assigned|API identifier|\n\n#### Desired State Attributes\n\n|API field|Attributes|Description|\n|----|----|----|\n|position|float|0.0 is completely closed and 1.0 is completely open.|\n\n#### Last Reading Attributes\n\n|API field|Attributes|Description|\n|----|----|----|\n|connection|Boolean|whether or not the device is reachable remotely|\n\n",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            }
+        },
+        "/cameras/{device_id}": {
+            "get": {
+                "responses": {},
+                "summary": "Get Camera",
+                "description": "#### Air Conditioner Model Fields\n\n|API field|Attributes|Description|\n|----|----|----|\n|camera_id|string, assigned|API identifier|\n\n#### Desired State Attributes\n\n|API field|Attributes|Description|\n|----|----|----|\n|capturing_video|boolean|Whether or not the camera is currently capturing video|\n|capturing_audio|boolean|Whether or not the camera is currently capturing audio|\n|mode|string|one of \"armed\", \"disarmed\", \"privacy\"\n\n#### Last Reading Attributes\n\n|API field|Attributes|Description|\n|----|----|----|\n|motion|Boolean|whether or not the dropcam currently detects movement|\n|loudness|Boolean|whether or not the dropcam currently detects sound|\n|connection|Boolean|whether or not the device is reachable remotely|\n\n",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            }
+        },
+        "/doorbells/{device_id}": {
+            "get": {
+                "responses": {},
+                "summary": "Get Egg Minder",
+                "description": "#### Eggtray Model Fields\n\n|API field|Attributes|Description|\n|----|----|----|\n|eggtray_id|string, assigned|API identifier|\n|freshness_period|(integer, mutable with write_data permission on eggtray device)|[Period during which eggs are defined as fresh in seconds]|\n|eggs|(array of 14 integers, assigned, immutable)|[Timestamp in seconds of when each egg was added]|\n\n            {\n                \"eggs\": [\n                    1377180085,\n                    1377180086,\n                    1377180087,\n                    1377180088,\n                    1377180089,\n                    1377180090,\n                    1377180091,\n                    1377180092,\n                    1377180093,\n                    1377180094,\n                    1377180095,\n                    1377180096,\n                    1377180097,\n                    1377180098\n                ],\n                \"freshness_period\": 2419200\n            }\n\n#### Desired State Attributes\n\nn/a\n\n#### Last Reading Attributes\n\n|API field|Attributes|Description|\n|----|----|----|\n|connection|boolean|connection to server|\n|battery|float|0.0 - 1.0 battery level|\n|inventory|integer|# of eggs|\n|freshness_remaining|integer|seconds until oldest egg goes bad|\n\n",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            }
+        },
+        "/garage_doors/{device_id}": {
+            "get": {
+                "responses": {},
+                "summary": "Get Garage Door",
+                "description": "#### Garage Door Model Fields\n\n|API field|Attributes|Description|\n|----|----|----|\n|garage_door_id|string, assigned|API identifier|\n\n#### Desired State Attributes\n\n|API field|Attributes|Description|\n|----|----|----|\n|position|float|0 - 1, *while a float, the app should only send up 0 or 1, for security*|\n|laser|boolean|turn on/off laser|\n|calibration_enabled|boolean|turn on/off calibration mode|\n\n#### Last Reading Attributes\n\n|API field|Attributes|Description|\n|----|----|----|\n|connection|Boolean|whether or not the device is reachable remotely|\n|buzzer|boolean|whether or not the buzzer is on|\n|led|boolean|whether or not the LED is on|\n|moving|boolean|whether or not the garage door is current moving|\n|fault|boolean|whether or not there is an error with the garage door|\n|disabled|boolean|whether remote control is disabled due to an error|\n|error|array|string array of errors|\n|control_enabled|boolean|whether or not the unit is capable of remote control|\n|controller_error|array,string|errors from the controller unit,putting the garage door into state where remote control is disabled|\n|tilt_sensor_error|array,string|whether the tilt sensor has a battery/in range or if that battery is low|\n\n",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            }
+        },
+        "/hubs/{device_id}": {
+            "get": {
+                "responses": {},
+                "summary": "Get Hub",
+                "description": "#### Hub Model Fields\n\n|API field|Attributes|Description|\n|----|----|----|\n|hub_id|string, assigned|API identifier|\n\n### Desired State Attributes\n\n|API field|Attributes|Description|\n|----|----|----|\n|pairing_mode|(string of radio to enter)|[zigbee, zwave, lutron, zwave_exclusion]|\n|kidde_radio_code|(int, assigned, mutable)|[0 - 255, represent 8-bit radio frequency of Wink Hub to look for kidde smoke detector}|\n\n### Last Reading Attributes\n\n|API field|Attributes|Description|\n|----|----|----|\n|connection|Boolean|whether or not the device is reachable remotely|\n|remote_pairable|boolean|whether or not a connected Lutron remote is ready for association|\n|updating_firmware|boolean|whether the hub is currently updating its firmware|\n|firmware_version|string|current hub firmware_version|\n|mac_address|string|hub mac address|\n|ip_address|string|ip address of hub|\n|update_needed|boolean|whether or not the hub needs a firmware update|\n\n",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            }
+        },
+        "/light_bulb/{device_id}": {
+            "get": {
+                "responses": {},
+                "summary": "Get Light Bulb",
+                "description": "#### Light Bulb Model Fields\n\n|API field|Attributes|Description|\n|----|----|----|\n|light_bulb_id|string, assigned|API identifier|\n\n#### Desired State Attributes\n\n|API field|Attributes|Description|\n|----|----|----|\n|powered|boolean|whether device is powered on|\n|brightness|float|0.0 to 1.0, dimness level (binary_switch and light_bulb)|\n|color_model|(string)|one of: \"xy\", \"hsb\", \"color_temperature\", or \"rgb\" |\n|color_x|(float, precision 4)|the CIE 1931 coordinates of the bulb's color [0.0, 1.0]|\n|color_y|(float, precision 6)|he CIE 1931 coordinates of the bulb's color [0.0, 1.0]|\n|hue|(float, precision 6)|the 360-degree value of the bulb's color (normalized to 1.0)|\n|saturation|(float, precision 6)|the percentage value of the bulb's saturation (normalized to 1.0) [0.0, 1.0]|\n|color_temperature|(integer)|the Kelvin value of the bulb's color [2000 .. 6500]|\n|color|(string)|the hexadecimal value of the bulb color (without a leading '#')|\n|powering_mode|(string)|one of \"dumb\", \"smart\", \"none\" or null|\n\n#### Last Reading Attributes\n\n|API field|Attributes|Description|\n|----|----|----|\n|connection|Boolean|whether or not the device is reachable remotely|\n\n",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            }
+        },
+        "/locks/{device_id}": {
+            "get": {
+                "responses": {},
+                "summary": "Get Lock",
+                "description": "#### Lock Model Fields\n\n|API field|Attributes|Description|\n|----|----|----|\n|lock_id|string, assigned|API identifier|\n\n#### Desired State Attributes\n\n|API field|Attributes|Description|\n|----|----|----|\n|locked|boolean|whether or not the lock is locked|\n|alarm_mode|string|null, \"activity\", \"tamper\", \"forced_entry\"|\n|alarm_sensitivity|float|ercentage 1.0 for Very sensitive, 0.2 for not sensitive, steps in values of 0.2|\n|auto_lock_enabled|boolean|whether or not the auto lock feature is enabled|\n|beeper_enabled|boolean|whether or not the beeper is enabled|\n|vacation_mode|boolean|whether or not the vacation mode is enabled|\n|key_code_length|integer| usually betweeen 4 and 8, check for capabilities for allowed units|\n\n#### Last Reading Attributes\n\n|API field|Attributes|Description|\n|----|----|----|\n|connection|Boolean|whether or not the device is reachable remotely|\n|alarm_activated|boolean|becomes true when alarm is triggered on lock|\n\n",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            }
+        },
+        "/cloud_clocks/{device_id}": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "List nimbi",
+                "description": "",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            }
+        },
+        "/cloud_clocks/{cloud_clock_id}/alarms": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {
+                            "application/json": {
+                                "alarm_id": "fadlkfh_124_hasd",
+                                "cloud_clock_id": "fasinfhs_12670s",
+                                "name": "Wakie wakie",
+                                "recurrence": "DTSTART;TZID=America/New_York:20130826T073000nRRULE:FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR",
+                                "enabled": true,
+                                "next_at": 123456789
+                            }
+                        }
+                    }
+                },
+                "summary": "List alarms of nimbus",
+                "description": "",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            },
+            "post": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {
+                            "application/json": {
+                                "alarm_id": "fadlkfh_124_hasd",
+                                "cloud_clock_id": "fasinfhs_12670s",
+                                "name": "Wakie wakie",
+                                "recurrence": "DTSTART;TZID=America/New_York:20130826T073000nRRULE:FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR",
+                                "enabled": true,
+                                "next_at": 123456789
+                            }
+                        }
+                    }
+                },
+                "summary": "Create an alarm",
+                "description": "",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            }
+        },
+        "/alarms/{alarm_id}": {
+            "put": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {
+                            "application/json": {
+                                "alarm_id": "fadlkfh_124_hasd",
+                                "cloud_clock_id": "fasinfhs_12670s",
+                                "name": "Wakie wakie",
+                                "recurrence": "DTSTART;TZID=America/New_York:20130826T073000nRRULE:FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR",
+                                "enabled": true,
+                                "next_at": 123456789
+                            }
+                        }
+                    }
+                },
+                "summary": "Edit an alarm",
+                "description": "",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            },
+            "delete": {
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Delete an alarm",
+                "description": "",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            }
+        },
+        "/power_strips/{device_id}": {
+            "get": {
+                "responses": {},
+                "summary": "Get Power Strip",
+                "description": "#### Power strip Model\n\n|API Fields|Attributes|Description|\n|----|----|----|\n|power_strip_id|string, assigned|API identifier|\n|outlets|array of two outlets|the two outlets of the powerstrip|\n\n#### Power strip Last Reading\n\n|API Fields|Attributes|Description|\n|----|----|----|\n|connection|boolean|whether or not the powerstrip is connected|\n\n#### Outlet Model\n\n|API Fields|Attributes|Description|\n|----|----|----|\n|outlet_id|string, assigned|API identifier|\n|outlet_index|(numeric, assigned, immutable)|Order of outlet on power strip|\n\n#### Outlet Desired State\n\n|API Fields|Attributes|Description|\n|----|----|----|\n|powered|boolean|whether or not the outlet is on|\n\n",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            }
+        },
+        "/piggy_bank/{device_id}": {
+            "get": {
+                "responses": {},
+                "summary": "Get Piggy Bank",
+                "description": "#### Device Model\n\n|API field|Attributes|Description|\n|----|----|----|\n|piggy_bank_id|string, assigned|API identifier|\n|color|String|hex string of porkfolio nose color|\n\n#### Last Reading Attributes\n\n|API field|Attributes|Description|\n|----|----|----|\n|connection|Boolean|whether or not the device is reachable remotely|\n|battery|float|0 - 1 battery percentage|\n|vibration|boolean|becomes true when accelerometer is triggered on movement|\n\n",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            }
+        },
+        "/piggy_banks/{piggy_bank_id}/deposits?since={timestamp}": {
+            "get": {
+                "responses": {},
+                "summary": "Get all deposits for Piggy Bank",
+                "description": "",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            },
+            "post": {
+                "responses": {},
+                "summary": "Create a deposit or withdrawal",
+                "description": "",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            }
+        },
+        "/refrigerators/{device_id}": {
+            "get": {
+                "responses": {},
+                "summary": "Get Refrigerator",
+                "description": "#### Refrigerator Model Fields\n\n|API field|Attributes|Description|\n|----|----|----|\n|refrigerator_id|string, assigned|API identifier|\n\n#### Desired State Attributes\n\n|API field|Attributes|Description|\n|----|----|----|\n|refrigerator_set_point|float|set point for refrigerator in celsius|\n|freezer_set_point|float|set point for freezer in celsius|\n|refrigerator_ice_maker_enabled|boolean|whether or not the ice maker for the refrigerator is enabled|\n|freezer_ice_maker_enabled|boolean|whether or not the ice maker for the freezer is enabled|\n|sabbath_mode_enabled|boolean|whether or not sabbath mode is enabled|\n\n#### Last Reading Attributes\n\n|API field|Attributes|Description|\n|----|----|----|\n|min_refrigerator_set_point_allowed|float|minimum allowed set point in celsius|\n|max_refrigerator_set_point_allowed|float|maximum allowed set point in celsius|\n|min_freezer_set_point_allowed|float|minimum allowed set point in celsius|\n|max_freezer_set_point_allowed|float|maximum allowed set point in celsius|\n|refrigerator_left_door_ajar|boolean|whether the left refrigerator door is currently ajar|\n|refrigerator_right_door_ajar|boolean|whether the right refrigerator door is currently ajar|\n|refrigerator_door_ajar|boolean|whether either refrigerator door is currently ajar|\n|freezer_door_ajar|boolean|whether the freezer door is currently ajar|\n|water_filter_remaining|float|[0 - 1] percentage of water filter remaining|\n|firmware_version|string|current firmware version of refrigerator unit|\n|update_needed|boolean|whether refrigerator unit needs an update|\n|updating_firmware|boolean|whether refrigerator unit is currently updating|\n|symbiote_firmware_version|string|current firmware version of wifi module|\n|symbiote_update_needed|boolean|whether wifi module needs an update|\n|symbiote_updating_firmware|boolean|whether wifi module is currently updating|\n\n",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            }
+        },
+        "/propane_tanks/{device_id}": {
+            "get": {
+                "responses": {},
+                "summary": "Get Refuel",
+                "description": "#### Refuel Model Fields\n\n|API field|Attributes|Description|\n|----|----|----|\n|propane_tank_id|string, assigned|API identifier|\n\n#### Device Attributes\n\n|API field|Attributes|Description|\n|----|----|----|\n|tare|(float)|weight of tank, as printed on can|\n|tank_changed_at|timestamp|time a new tank was added||\n\n#### Desired State Attributes\n\nn/a\n\n#### Last Reading Attributes\n\n|API field|Attributes|Description|\n|----|----|----|\n|connection|Boolean|whether or not the device is reachable remotely|\n|battery|float|0 - 1, battery percentage|\n|remaining|float|0 - 1, percent fuel remaining|\n\n",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            }
+        },
+        "/remotes/{device_id}": {
+            "get": {
+                "responses": {},
+                "summary": "Get Remote",
+                "description": "#### Remote Model Fields\n\n|API field|Attributes|Description|\n|----|----|----|\n|remote_id|string, assigned|API identifier|\n\n#### Desired State Attributes\n\nn/a\n\n#### Last Reading Attribute\n\n|API field|Attributes|Description|\n|----|----|----|\n|remote_pairable|boolean|wehter or not the remote is pairing with a device|\n|group_id|string|Reference to the Group object linked to the remote|\n|button_up_pressed|boolean|up button is pressed|\n|button_down_pressed|boolean|down button is pressed|\n|button_on_pressed|boolean|on button is pressed|\n|button_off_pressed|boolean|off button is pressed|\n\n",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            }
+        },
+        "/sensor_pods/{device_id}": {
+            "get": {
+                "responses": {},
+                "summary": "Get Sensor",
+                "description": "#### Sensor Model Fields\n\n|API field|Attributes|Description|\n|----|----|----|\n|sensor_pod_id|string, assigned|API identifier|\n\n#### Desired State Attributes\n\nn/a\n\n#### Last Reading Attribute\n\n|API Field|Attributes|Description|\n|----|----|----|\n|battery|float|[0 - 1] percentage of battery|\n|connection|boolean|whether or not the sensor has connection|\n|brightness|boolean|whether or not the sensor currently detects a large delta in light|\n|external_power|boolean|whether the sensor is running on AC power or battery|\n|humditity|float|[0 - 100] percentage of measured of humidity|\n|loudness|boolean|whether the sensor is currently detects a large delta in sound|\n|temperature|float|current reported temperature in celsius|\n|vibration|boolean|whether the sensor currently detects a large delta in vibration|\n|motion|boolean|whether the sensor currently detects a large delta in motion|\n|opened|boolean|whether the sensor detects an opened state|\n|locked|boolean|whether the sensor detects a locked state|\n|liquid_detected|boolean|whether the sensor detects moisture|\n|occupied|boolean|whether or not the sensor has detected occupancy in the last 30 minutes|\n\n",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            }
+        },
+        "/sirens/{device_id}": {
+            "get": {
+                "responses": {},
+                "summary": "Get Siren",
+                "description": "#### Siren Model Fields\n\n|API field|Attributes|Description|\n|----|----|----|\n|siren_id|string, assigned|API identifier|\n\n#### Desired State Fields\n\n|API Field|Attributes|Description|\n|----|----|----|\n|mode|String|one of [siren_only, strobe_only, siren_and_strobe]|\n|powered|boolean|whether or not the siren is on|\n|auto_shutoff|Integer|one of [null (never), 30, 60, 120]. Values are in seconds.|\n\n#### Last Reading Attribute\n\n|API Field|Attributes|Description|\n|----|----|----|\n|battery|float|[0 - 1] percentage of battery|\n|connection|boolean|whether or not the sensor has connection|\n\n",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            }
+        },
+        "/smoke_detector/{device_id}": {
+            "get": {
+                "responses": {},
+                "summary": "Get Smoke Alarm",
+                "description": "#### Smoke Alarm Model Fields\n\n|API field|Attributes|Description|\n|----|----|----|\n|smoke_detector_id|string, assigned|API identifier|\n\n#### Desired State Fields\n\nn/a\n\n#### Last Reading Fields\n\n|API Field|Attributes|Description|\n|----|----|----|\n|smoke_detected|boolean|whether or not smoke is currently detected|\n|co_detected|boolean|whether or not carbon monoxide is currently detected|\n|test_activated|whether or not a test is currently activated|\n|connection|boolean|current connection status|\n|battery|float|[0 - 1] battery percentage|\n|smoke_severity|float|[0 - 1] if present, severity of smoke detection|\n|co_severity|float|[0 - 1] if present, severity of co detection|\n\n",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            }
+        },
+        "/sprinklers/{device_id}": {
+            "get": {
+                "responses": {},
+                "summary": "Get Sprinklers",
+                "description": "The sprinkler model has an array of zones. The zone objects themselves just display the state of the zones. Control of the zones is on the the desired_state of the sprinkler object with the run_zones and run_zones_durations.\n\n#### Sprinkler Model\n\n|API Field|Attribute|Description|\n|----|----|----|\n|sprinkler_id|string, assigned|API identifier|\n|zones|array of zones|Zones of sprinkler, which can display the state of the given nozzles|\n\n#### Desired State Fields\n\n|API Field|Attribute|Description|\n|----|----|----|\n|run_zones|array of integers|indices of zones to run|\n|run_zones_durations|array of integer|duration in seconds of each of the run_zones|\n\n\n#### Zone Model\n\n|API Field|Attribute|Description|\n|----|----|----|\n|zone_id|string, assigned|API identifier|\n|zone_index|integer|index of zone on sprinkler system|\n|enabled|boolean|whether or not the zone is hooked up|\n\n#### Zone Desired State\n\n|API Field|Attribute|Description|\n|----|----|----|\n|shade|String|Shade state of vegetation in zone, one of [\"none\", \"moderate\", \"mostly\"]|\n|nozzle|String|Nozzle type of zone, one of [\"fixed_spray_head\",\"drip\", \"manual_sprinkler\", \"rotary_head\", \"rotor_head\"]|\n|slope|String|Slope of vegetation in zone, one of [\"bottom\", \"flat\", \"slope\", \"top\"]|\n|soil|String|Soil of vegetation in zone, one of [\"clay\", \"sand\", \"silt\", \"top_soil\"]|\n|vegetation|String|Type of vegetation in zone, one of [\"annuals\",\"garden\", \"grass\",\"perennials\", \"shrubs\", \"trees\", \"xeric\", \"xeriscape\" ]|\n\n#### Zone Last Reading\n\n|API Field|Attribute|Description|\n|----|----|----|\n|powered|boolean|whether or not the zone is currently on, note this cannot be controlled on the zone level. It can only be set as an object in run_zones|\n\n",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            }
+        },
+        "/thermostats/{device_id}": {
+            "get": {
+                "responses": {},
+                "summary": "Get Thermostat",
+                "description": "#### Thermostat Model Fields\n\n|API field|Attributes|Description|\n|----|----|----|\n|thermostat_id|string, assigned|API identifier|\n\n\n#### Desired State Fields\n\n|API Field|Attribute|Description|\n|----|----|----|\n|mode|String|One of [\"cool_only\", \"heat_only\", \"auto\", \"aux\"], allowed value depends in `mode.choices` in capabilities|\n|powered|boolean|whether or not the hvac is on|\n|max_set_point|float, in celsius|max set point for cooling in celsius|\n|min_set_point|float, in celsius|min set point for heating in celsius|\n|override_temperature|float, in celsius|temperature sent to thermostat to override interally read temperature|\n|setpoint_increment_value|integer, in tenths of celsius|value that the thermostat will change on tapping|\n|accelerometer_enable|boolean|whether or not temperature change on tapping is enabled|\n|temperature_override_enable|boolean|whether or not overriding the temperature is enabled|\n|fan_duration|integer|Set fan on for duration in seconds|\n|users_away|boolean|Set users away -- thermostat will manage temperature at a lower set point|\n|cooling_system_stage|String|one of \"cool_stage_1\", \"cool_stage_2\"|\n|heating_system_stage|String|one of \"heat_stage_1\", \"heat_stage_2\"|\n|heating_system_type|String|one of \"conventional\", \"heat_pump\"|\n|heating_fuel_source|String|one of \"electric\", \"gas\"|\n|humidifier_mode|String|one of \"on\", \"off\", \"auto\"|\n|humidifier_set_point|float|[0.0 - 1.0]|\n|fan_mode|String|one of \"[on,auto]\", auto will turn the fan on when heating or cooling is active|\n|dehumidifier_mode|string|one of “[on,off]”|\n|dehumidifier_set_point|float|the humidity degree in which the thermostat will start to dehumidify|\n|dehumidify_overcool_offset|float|cool in x F below cool setpoint in order to reach the dehumidification setpoint, capabilities will express an array of choices from 0 to the equivalent of 5 degrees F in steps of 0.5 degrees F, converted to C|\n|profile|string| one of “[home,away,sleep,awake,null]” depends on capabilities]\n|fan_run_time|int|minimum amount of time to circulate air per hour when fan is on AUTO mode, 0-3300 seconds, increments of 300 seconds|\n\n#### Last Reading Fields\n\n|API Field|Attribute|Description|\n|----|----|----|\n|connection|boolean|whether or not the device is reachable remotely|\n|temperature|float in celsius|[maps to room temperature last read from device itself]|\n|smart_temperature|ecobee only, mean temp of all remote sensors and thermostat|\n|humidity|float|[0-100] from device readings|\n|external_temperature|float in celsius|the outdoor temperature/weather|\n|max_max_set_point|float in celsius|highest allowed max set point|\n|min_max_set_point|float in celsius|lowest allowed max set point|\n|max_min_set_point|float in celsius|highest allowed min set point|\n|min_min_set_point|float in celsius|lowest allowed min set point|\n|has_fan|boolean|whether or not the thermostat unit has a fan|\n|fan_timer_active|boolean|whether or not the fan timer is active|\n|eco_target|boolean|whether or not the thermostat is running in an energy efficient mode|\n|override_temperature_group_id|string|group id of group used to calculate temperature override|\n|deadband|float in celsius|minimum difference between max and min set points|\n|technician_name|String|contractor contact data|\n|technician_phone|String|contractor contact data|\n|aux_active|boolean|Auxiliary heat is actively pumping|\n|cool_active|boolean|Cool is actively pumping|\n|heat_active|boolean|Heat is actively pumping|\n|fan_active|boolean|Fan is actively running|\n|last_error|string|the current alert/warning on the thermostat|\n|occupied|boolean|Whether or not the thermostat has detected occupancy in the last 30 minutes|\n\n",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            }
+        },
+        "/water_heaters/{device_id}": {
+            "get": {
+                "responses": {},
+                "summary": "Get Water Heater",
+                "description": "#### Water Heater Model Fields\n\n|API field|Attributes|Description|\n|----|----|----|\n|water_heater_id|string, assigned|API identifier|\n\n#### Desired State Attributes\n\n|API Field|Attribute|Description|\n|----|----|----|\n|mode|String|one of \"eco\", \"performance\", \"heat_pump\", \"high_demand\", \"electric_only\", \"gas\"|\n|powered|boolean|whether or not the water heater is on|\n|set_point|float|set point in celsius|\n|vacation_mode|boolean|whether vacation mode is ucrrently enabled|\n\n#### Last Reading Attributes\n\n|API Field|Attribute|Description|\n|---|---|---|\n|min_set_point_allowed|float|minimum set point allowed in celsius|\n|max_set_point_allowed|float|maximum set point allowed in celsius|\n|modes_allowed|String array|one or many of modes, depends on rheem type|\n|scald_message|String|Populated if the set point is above 120F|\n|rheem_type|(String)|one of \"Electric Water Heater\", \"Heat Pump Water Heater\", \"Gas Water Heater\"|\n\n",
+                "tags": [
+                    "Device"
+                ],
+                "parameters": []
+            }
+        },
+        "/users/me/groups": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Get all groups",
+                "description": "",
+                "tags": [
+                    "Group"
+                ],
+                "parameters": []
+            },
+            "post": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Create a group",
+                "description": "",
+                "tags": [
+                    "Group"
+                ],
+                "parameters": []
+            }
+        },
+        "/groups/{group_id}/": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Retrieve a group",
+                "description": "",
+                "tags": [
+                    "Group"
+                ],
+                "parameters": []
+            },
+            "put": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Update group settings",
+                "description": "",
+                "tags": [
+                    "Group"
+                ],
+                "parameters": []
+            },
+            "delete": {
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Delete a group",
+                "description": "",
+                "tags": [
+                    "Group"
+                ],
+                "parameters": []
+            }
+        },
+        "/groups/{group_id}/activate": {
+            "post": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Set state",
+                "description": "+ Body\n            {\n                \"desired_state\": {\n                    \"powered\":true\n                }\n            }\n\n",
+                "tags": [
+                    "Group"
+                ],
+                "parameters": []
+            }
+        },
+        "/users/me/scenes": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Get all scenes",
+                "description": "",
+                "tags": [
+                    "Scene"
+                ],
+                "parameters": []
+            },
+            "post": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Create a scene",
+                "description": "",
+                "tags": [
+                    "Scene"
+                ],
+                "parameters": []
+            }
+        },
+        "/scenes/{scene_id}/": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Retrieve a scene",
+                "description": "",
+                "tags": [
+                    "Scene"
+                ],
+                "parameters": []
+            },
+            "put": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Update scene settings",
+                "description": "",
+                "tags": [
+                    "Scene"
+                ],
+                "parameters": []
+            },
+            "delete": {
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Delete a scene",
+                "description": "",
+                "tags": [
+                    "Scene"
+                ],
+                "parameters": []
+            }
+        },
+        "/scenes/{scene_id}/activate": {
+            "post": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Set state",
+                "description": "",
+                "tags": [
+                    "Scene"
+                ],
+                "parameters": []
+            }
+        },
+        "/users/me/robots": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Get all robots",
+                "description": "",
+                "tags": [
+                    "Robot"
+                ],
+                "parameters": []
+            },
+            "post": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Create a robot",
+                "description": "",
+                "tags": [
+                    "Robot"
+                ],
+                "parameters": []
+            }
+        },
+        "/robots/{robot_id}/": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Retrieve a robot",
+                "description": "",
+                "tags": [
+                    "Robot"
+                ],
+                "parameters": []
+            },
+            "put": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Update robot settings",
+                "description": "",
+                "tags": [
+                    "Robot"
+                ],
+                "parameters": []
+            },
+            "delete": {
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "headers": {},
+                        "examples": {}
+                    }
+                },
+                "summary": "Delete a robot",
+                "description": "",
+                "tags": [
+                    "Robot"
+                ],
+                "parameters": []
+            }
+        },
+        "/users": {
+            "post": {
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "headers": {},
+                        "examples": {
+                            "application/json": {
+                                "user_id": "27412",
+                                "first_name": "User",
+                                "last_name": "McUserson",
+                                "email": "user@example.com",
+                                "oauth2": {
+                                    "access_token": "example_access_token_like_135fhn80w35hynainrsg0q824hyn",
+                                    "refresh_token": "...",
+                                    "token_type": "bearer",
+                                    "token_endpoint": "https://winkapi.quirky.com/oauth2/token"
+                                },
+                                "locale": "en_us",
+                                "units": {},
+                                "tos_accepted": false,
+                                "confirmed": false
+                            }
+                        }
+                    }
+                },
+                "summary": "Create user",
+                "description": "",
+                "tags": [
+                    "User"
+                ],
+                "parameters": []
+            }
+        },
+        "/users/{user_id}": {
+            "put": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {
+                            "application/json": {
+                                "data": {
+                                    "user_id": "abc123def-an15nag",
+                                    "email": "user@example.com"
+                                }
+                            }
+                        }
+                    }
+                },
+                "summary": "Update current user's profile",
+                "description": "",
+                "tags": [
+                    "User"
+                ],
+                "parameters": [
+                    {
+                        "name": "user_id (required, string, `21212`) ... String `user_id` of the user to perform action on. Has example value.",
+                        "in": "body",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/users/{user_id}/update_password": {
+            "post": {
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "examples": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "summary": "update password",
+                "description": "",
+                "tags": [
+                    "User"
+                ],
+                "parameters": []
+            }
+        }
+    },
+    "definitions": {
+        "Obtain access token": {},
+        "Desired State and Last Reading": {},
+        "Wink Devices": {},
+        "Wink DevicesModel": {},
+        "Sharing device": {},
+        "Sharing deviceModel": {},
+        "Unshare a device": {},
+        "Air Conditioner": {},
+        "Binary Switch": {},
+        "Blind": {},
+        "Camera": {},
+        "Doorbell": {},
+        "Garage Door": {},
+        "Hub": {},
+        "Light Bulb": {},
+        "Lock": {},
+        "Nimbus": {},
+        "NimbusModel": {},
+        "Nimbus Alarm": {},
+        "Nimbus AlarmModel": {},
+        "Alarm": {},
+        "Power Strip": {},
+        "Piggy Bank": {},
+        "Deposits": {},
+        "Refrigerators": {},
+        "Refuel": {},
+        "Remote": {},
+        "Sensor": {},
+        "Sirens": {},
+        "Smoke Alarm": {},
+        "Sprinklers": {},
+        "Thermostats": {},
+        "Water Heaters": {},
+        "Groups": {},
+        "GroupsModel": {},
+        "Group": {},
+        "Set state of group": {},
+        "Scenes": {},
+        "ScenesModel": {},
+        "Scene": {},
+        "Set state of scene": {},
+        "Robots": {},
+        "RobotsModel": {},
+        "Robot": {},
+        "User": {},
+        "UserModel": {},
+        "User password": {}
+    }
+}
